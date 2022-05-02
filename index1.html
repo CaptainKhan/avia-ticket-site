@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <section class="section1">
+        <header>
+          <nav>
+            <ul>
+              <li><a href="#">Haqqımızda</a></li>
+              <li><a href="#">Xəbərlər</a></li>
+              <li><a href="#">Qeyd Ol</a></li>
+              <li><a href="#">Daxil Ol</a></li>
+            </ul>
+          </nav>
+        </header>
+
+        <div class="tabs">
+          <ul class="tab-list">
+            <li><a href="#">Uçuşlar</a></li>
+            <li><a href="https://www.booking.com/" target="_blank">Otel</a></li>
+            <li><a href="https://rentacarbaku.az/" target="_blank">Rent Car</a></li>
+          </ul>
+          <div class="tab-wrapper">
+            <div class="formm">
+              <form id="form" action="">
+                <div class="form0">
+                  <label class="form-heading" for=""
+                    >Sizə Ən Uyğun Bilet Burdadır</label
+                  >
+                  <br />
+                  <div class="radio-button">
+                    <input type="radio" name="name" id="g" />
+                    <span>Gediş</span>
+                    <input type="radio" name="name" id="gg" />
+                    <span>Gediş-Gəliş</span>
+                  </div>
+                </div>
+
+                <div class="form1">
+                  <div class="from">
+                    <label for="">Hardan: </label>
+                    <select name="from" id="from"></select>
+                  </div>
+
+                  <div class="to">
+                    <label for="">Hara: </label>
+                    <select name="to" id="to"></select>
+                  </div>
+                </div>
+
+                <div class="form2">
+                  <div class="leave">
+                    <label for="">Uçuş</label>
+                    <br />
+                    <input
+                      name="startDate"
+                      type="datetime-local"
+                      id="startDate meeting-time"
+                    />
+                  </div>
+                  <div id="return" class="return">
+                    <label for="">Qayıdış</label>
+                    <br />
+                    <input type="datetime-local" id="meeting-time returnDate" />
+                  </div>
+                </div>
+                <button id="submit" class="find" type="submit">Axtar</button>
+              </form>
+            </div>
+
+            <div class="corporation">
+              <img src="./images/6.jpeg" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section2">
+        <div id="tableid" class="display-data">
+          <table></table>
+        </div>
+      </section>
+
+      <section id="section-overlay" class="overlay">
+          <div class="form-wrapper">
+            <form class="overlay-form" action="">
+              <label for="">Emailinizi Daxil Edin</label>
+              <input type="email" placeholder="E-mail" required>
+              <span>Şifrənizi Daxil Edin</span>
+              <input type="password" placeholder="Password" required>
+              <div class="overlay-buttons">
+                <button id="close">Close</button>
+                <span>Bilet sayı:</span>
+                <input type="number" placeholder="0" name="" required min="1" id="overlay-number">
+                <button id="buying" type="submit">Bileti Al</button>
+              </div>
+            </form>
+          </div>
+      </section>
+    </div>
+
+
+
+    <footer>
+      <span>&copy; Copyright 2022 / Team Undefined</span>
+    </footer>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./app.js"></script>
+    <script src="./main.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        var fromArray = [];
+        var toArray = [];
+        $.ajax({
+          method: "GET",
+          headers: {
+            ApiKey: "gubahackatonbyramin",
+          },
+          dataType: "json",
+          url: "http://ramin000-001-site1.dtempurl.com/api/admin/all",
+          success: function data(datas) {
+            console.log("datas", datas);
+
+            let forCities = [];
+            let toCities = [];
+
+            for (let i = 0; i < datas.length; i++) {
+              forCities.push(datas[i].from);
+              toCities.push(datas[i].to);
+            }
+
+            forCities = [...new Set(forCities)];
+            toCities = [...new Set(toCities)];
+
+            for (let i = 0; i < forCities.length; i++) {
+              $("#from").append("<option>" + forCities[i] + "</option>");
+            }
+
+            for (let i = 0; i < toCities.length; i++) {
+              $("#to").append("<option>" + toCities[i] + "</option>");
+            }
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
